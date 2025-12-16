@@ -3,86 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FashionFinder | Campestre Edition</title>
+    <title>FashionFinder | Boutique</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        #video-background {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            z-index: -1;
-            filter: brightness(0.6) saturate(1.2); /* Colores vivos y un poco oscuros para leer bien */
-            object-fit: cover;
-        }
-
-        /* Estilo de cristal con tono verdoso muy sutil */
-        .glass-panel {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .product-card {
-            background: rgba(255, 255, 255, 0.9);
-            color: #1a3a3a;
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
+        body { background-color: #121212; color: white; }
+        .sidebar { background-color: #1a1a1a; width: 260px; height: 100vh; position: fixed; left: 0; top: 0; overflow-y: auto; border-right: 1px solid #333; }
+        .main-content { margin-left: 260px; padding: 40px; min-height: 100vh; }
+        .category-item { padding: 10px 20px; color: #999; cursor: pointer; transition: 0.3s; font-size: 14px; display: block; }
+        .category-item:hover { color: white; background: #252525; }
+        .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #333; }
     </style>
 </head>
-<body class="text-white font-sans">
+<body>
 
-    <video autoplay muted loop playsinline id="video-background">
-        <source src="https://cdn.pixabay.com/video/2023/07/20/172352-847382218_tiny.mp4" type="video/mp4">
-        Tu navegador no soporta vídeo.
-    </video>
+    <aside class="sidebar py-8">
+        <h2 class="px-6 text-xl font-bold tracking-tighter mb-8 text-white uppercase">Categorías</h2>
+        
+        <div class="mb-6">
+            <h3 class="px-6 text-xs font-bold text-indigo-500 uppercase mb-2">Mujer / Hombre</h3>
+            <a onclick="setCategory('Abrigos')" class="category-item">Abrigos</a>
+            <a onclick="setCategory('Chaquetas')" class="category-item">Chaquetas</a>
+            <a onclick="setCategory('Camisetas')" class="category-item">Camisetas</a>
+            <a onclick="setCategory('Pantalones')" class="category-item">Pantalones</a>
+            <a onclick="setCategory('Vestidos')" class="category-item">Vestidos</a>
+            <a onclick="setCategory('Zapatos')" class="category-item">Zapatos</a>
+            <a onclick="setCategory('Accesorios')" class="category-item">Accesorios</a>
+            <a onclick="setCategory('Lencería')" class="category-item">Lencería</a>
+            <a onclick="setCategory('Pijamas')" class="category-item">Pijamas</a>
+            <a onclick="setCategory('Ropa de deporte')" class="category-item">Ropa de Deporte</a>
+        </div>
+    </aside>
 
-    <div class="container mx-auto px-4 py-10 relative z-10">
-        <header class="text-center mb-12">
-            <h1 class="text-5xl md:text-7xl font-serif italic mb-2 drop-shadow-lg">FashionFinder</h1>
-            <p class="text-sm tracking-[0.3em] uppercase text-green-200 drop-shadow-md">Catálogo Campestre & Natureza</p>
+    <main class="main-content">
+        <header class="mb-12">
+            <h1 class="text-4xl font-extrabold uppercase tracking-tighter">FashionFinder</h1>
+            <p id="categoria-actual" class="text-indigo-400 text-sm tracking-widest mt-2 uppercase">Todos los productos</p>
         </header>
 
-        <section class="max-w-xl mx-auto glass-panel p-8 rounded-3xl shadow-2xl mb-16">
-            <div class="space-y-6">
-                <div>
-                    <label class="text-[10px] uppercase tracking-widest text-green-300 block mb-2">Prenda deseada</label>
-                    <input type="text" id="prenda" placeholder="Ej: Vestido lino verde" 
-                           class="w-full bg-transparent border-b border-white/40 pb-2 outline-none focus:border-green-400 text-xl transition">
-                </div>
+        <section class="glass-card p-8 mb-12 max-w-3xl">
+            <div class="flex flex-col gap-6">
+                <input type="text" id="prenda" placeholder="Buscar prenda..." 
+                       class="bg-transparent border-b border-white/20 p-3 outline-none focus:border-white transition text-xl">
                 
-                <div class="flex gap-8">
-                    <div class="w-1/2">
-                        <label class="text-[10px] uppercase tracking-widest text-green-300 block mb-2">Precio Mín</label>
-                        <input type="number" id="minPrice" placeholder="0 €" class="w-full bg-transparent border-b border-white/40 pb-2 outline-none focus:border-green-400">
-                    </div>
-                    <div class="w-1/2">
-                        <label class="text-[10px] uppercase tracking-widest text-green-300 block mb-2">Precio Máx</label>
-                        <input type="number" id="maxPrice" placeholder="500 €" class="w-full bg-transparent border-b border-white/40 pb-2 outline-none focus:border-green-400">
-                    </div>
+                <div class="flex gap-4">
+                    <input type="number" id="minPrice" placeholder="Precio Mín €" class="w-1/2 bg-white/5 p-3 rounded-lg outline-none">
+                    <input type="number" id="maxPrice" placeholder="Precio Máx €" class="w-1/2 bg-white/5 p-3 rounded-lg outline-none">
                 </div>
 
                 <button onclick="buscarPrenda()" 
-                        class="w-full bg-white text-green-900 font-bold py-4 rounded-xl hover:bg-green-100 transition-all uppercase text-sm tracking-widest">
-                    Explorar Colección
+                        class="bg-white text-black font-bold py-4 rounded-xl hover:bg-indigo-500 hover:text-white transition-all uppercase tracking-widest">
+                    Buscar ahora
                 </button>
             </div>
         </section>
 
-        <div id="resultados" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div id="resultados" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
-    </div>
-
-    <footer class="text-center py-20 text-[10px] uppercase tracking-[0.5em] text-white/60">
-        <p>Inspiración Natural • Conexión con Inditex API</p>
-    </footer>
+    </main>
 
     <script src="app.js"></script>
+    <script>
+        // Función para que al hacer clic en la categoría, se ponga en el buscador automáticamente
+        function setCategory(cat) {
+            document.getElementById('prenda').value = cat;
+            document.getElementById('categoria-actual').innerText = cat;
+            buscarPrenda(); // Lanza la búsqueda automáticamente
+        }
+    </script>
 </body>
 </html>
