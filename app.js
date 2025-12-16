@@ -4,7 +4,7 @@ async function buscarPrenda() {
     const max = document.getElementById('maxPrice').value;
     const contenedor = document.getElementById('resultados');
 
-    if(!prenda) return alert("Escribe qué buscas");
+    if(!prenda) return alert("Tienes que introducir la prenda para que te funcione");
 
     contenedor.innerHTML = '<p class="text-center col-span-3">Buscando...</p>';
 
