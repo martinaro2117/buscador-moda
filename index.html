@@ -3,30 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FashionFinder | Buscador de Ropa</title>
+    <title>FashionFinder | Luxury Search</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Capa para el vídeo de fondo */
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            filter: brightness(0.5) blur(3px); /* Oscurece y desenfoca un poco */
+            object-fit: cover;
+        }
+
+        /* Animación suave para los resultados */
+        .card-fade {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <div class="container mx-auto px-4 py-8">
-        <header class="text-center mb-10">
-            <h1 class="text-4xl font-bold text-indigo-600">FashionFinder</h1>
-            <p class="text-gray-600">Encuentra tu estilo al mejor precio</p>
+<body class="text-white">
+
+    <video autoplay muted loop id="video-background">
+        <source src="https://v.ftcdn.net/08/94/28/14/700_F_894281432_vP8KjA09gH6M6mK0S8S6Z5P7g2U6l8yL_ST.mp4" type="video/mp4">
+        Tu navegador no soporta vídeo.
+    </video>
+
+    <div class="container mx-auto px-4 py-12 relative z-10">
+        <header class="text-center mb-16">
+            <h1 class="text-6xl font-extrabold tracking-tighter uppercase mb-2">FashionFinder</h1>
+            <p class="text-xl font-light tracking-widest text-gray-300">INDITEX COLLECTION & MORE</p>
         </header>
 
-        <section class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md mb-8">
-            <div class="grid grid-cols-1 gap-4">
-                <input type="text" id="prenda" placeholder="Ej: Camiseta de lino" class="border p-2 rounded w-full">
-                <div class="flex gap-2">
-                    <input type="number" id="minPrice" placeholder="Precio Min" class="border p-2 rounded w-1/2">
-                    <input type="number" id="maxPrice" placeholder="Precio Max" class="border p-2 rounded w-1/2">
+        <section class="max-w-2xl mx-auto bg-black/60 backdrop-blur-md p-8 rounded-2xl border border-white/20 shadow-2xl mb-12">
+            <div class="flex flex-col gap-6">
+                <div class="relative">
+                    <input type="text" id="prenda" placeholder="¿Qué prenda buscas?" 
+                           class="w-full bg-white/10 border-b-2 border-white/30 p-4 outline-none focus:border-white transition text-xl placeholder:text-gray-400">
                 </div>
-                <button onclick="buscarPrenda()" class="bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">Buscar</button>
+                
+                <div class="flex gap-4">
+                    <input type="number" id="minPrice" placeholder="Mín €" class="w-1/2 bg-white/10 border-b border-white/30 p-3 outline-none focus:border-white">
+                    <input type="number" id="maxPrice" placeholder="Máx €" class="w-1/2 bg-white/10 border-b border-white/30 p-3 outline-none focus:border-white">
+                </div>
+
+                <button onclick="buscarPrenda()" 
+                        class="bg-white text-black font-bold py-4 rounded-full hover:bg-gray-200 transition-all uppercase tracking-widest shadow-lg active:scale-95">
+                    Buscar en el catálogo
+                </button>
             </div>
         </section>
 
-        <div id="resultados" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div id="resultados" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             </div>
     </div>
+
+    <footer class="text-center py-10 text-xs text-gray-400 uppercase tracking-widest">
+        <p>Colaborador oficial de programas de afiliados | Precios actualizados vía API</p>
+    </footer>
+
     <script src="app.js"></script>
 </body>
 </html>
