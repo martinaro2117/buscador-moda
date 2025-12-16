@@ -24,13 +24,13 @@ function mostrarResultados(productos) {
     const contenedor = document.getElementById('resultados');
     contenedor.innerHTML = '';
 
-    productos.slice(0, 12).forEach(prod => {
+    productos.forEach(prod => {
         contenedor.innerHTML += `
-            <div class="bg-white p-4 rounded shadow hover:shadow-lg transition">
-                <img src="${prod.thumbnail}" alt="${prod.title}" class="w-full h-48 object-contain mb-4">
-                <h3 class="font-bold text-sm h-10 overflow-hidden">${prod.title}</h3>
-                <p class="text-indigo-600 font-bold text-xl mt-2">$ ${prod.price}</p>
-                <a href="${prod.permalink}" target="_blank" class="block text-center bg-gray-800 text-white mt-4 py-2 rounded text-sm">Ver producto</a>
+            <div class="bg-[#222] p-4 rounded-2xl border border-white/5 hover:border-white/20 transition group">
+                <img src="${prod.thumbnail}" alt="${prod.title}" class="w-full h-64 object-contain mb-4 rounded-lg bg-white/5">
+                <h3 class="text-sm font-medium h-10 overflow-hidden text-gray-300">${prod.title}</h3>
+                <p class="text-white font-bold text-xl mt-2">${prod.price} €</p>
+                <a href="${prod.permalink}" target="_blank" class="block text-center bg-white/5 text-white border border-white/10 mt-4 py-2 rounded-lg hover:bg-white hover:text-black transition">Ver detalle</a>
             </div>
         `;
     });
