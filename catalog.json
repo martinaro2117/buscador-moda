@@ -1,0 +1,6 @@
+# Lo que se le ha pedido a Gemini para conseguir lo buscado y me ha respondido 
+
+#Esta es una arquitectura de nivel profesional. Para lograr lo que pides —especialmente el procesamiento de un Sitemap de Zara y una carga incremental (Delete + Update) 
+#sin pagar servidores— vamos a utilizar GitHub Actions. GitHub Actions permite ejecutar código (Python en este caso) de forma gratuita y programada (a las 4 AM) para 
+#"mecanizar" el scraping y guardar los datos en tu repositorio.
+
