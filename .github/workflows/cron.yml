@@ -18,12 +18,12 @@ jobs:
         run: pip install requests
 
       - name: Ejecutar Ingesta
-        run: python ingesta_zara.py # Asegúrate de que el nombre coincida con tu archivo .py
+        run: python zara.py # Asegúrate de que el nombre coincida con tu archivo .py
 
       - name: Guardar cambios en el JSON
         run: |
           git config --global user.name 'MartinaBot'
           git config --global user.email 'bot@github.com'
-          git add zara_catalog.json
+          git add catalog.json
           git commit -m "Update catálogo Zara incremental" || exit 0
           git push
