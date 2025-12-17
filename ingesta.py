@@ -5,61 +5,73 @@ import os
 from datetime import datetime
 
 def ingesta_zara():
-    # Sitemap de productos de Zara España
-    url_sitemap = "https://www.zara.com/sitemaps/sitemap-es-es.xml"
-    
+    # URL maestra de Zara
+    url_maestra = "https://www.zara.com/sitemaps/sitemap-index.xml"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
 
-    print("--- INICIANDO EXTRACCIÓN REAL ---")
+    print("--- INICIANDO EXTRACCIÓN INTELIGENTE ---")
 
     try:
-        response = requests.get(url_sitemap, headers=headers, timeout=30)
-        response.raise_for_status()
+        # 1. Buscamos el sitemap específico de productos España
+        resp_maestra = requests.get(url_maestra, headers=headers, timeout=20)
+        resp_maestra.raise_for_status()
         
-        # Parseo del XML con el namespace de Zara
-        root = ET.fromstring(response.content)
+        root_maestra = ET.fromstring(resp_maestra.content)
         ns = {'n': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         
-        urls = root.findall('n:url', ns)
-        print(f"He encontrado {len(urls)} enlaces totales en Zara.")
-
-        lista_productos = []
+        # Buscamos el sitemap que contenga 'product' y 'es-es' o simplemente el primero de productos
+        sitemaps = [loc.text for loc in root_maestra.findall(".//n:loc", ns)]
         
-        # Procesamos los primeros 100 enlaces que sean productos (/p/)
-        for u in urls:
-            link = u.find('n:loc', ns).text
+        # Filtramos para encontrar el de España (suelen tener 'es' o ser los primeros de la lista)
+        # Intentamos buscar uno de productos de España
+        target_sitemap = None
+        for s in sitemaps:
+            if 'product' in s and '-es-' in s:
+                target_sitemap = s
+                break
+        
+        if not target_sitemap:
+            # Si no encontramos el de España específico, cogemos el primero de productos
+            target_sitemap = [s for s in sitemaps if 'product' in s][0]
+
+        print(f"Sitemap encontrado: {target_sitemap}")
+
+        # 2. Leemos el sitemap de productos
+        response = requests.get(target_sitemap, headers=headers, timeout=20)
+        root = ET.fromstring(response.content)
+        
+        urls = root.findall('n:url', ns)
+        print(f"Total de enlaces encontrados: {len(urls)}")
+
+        productos_finales = []
+        
+        for url in urls[:100]:
+            loc = url.find('n:loc', ns).text
             
-            if "/p/" in link and len(lista_productos) < 100:
+            if "/p/" in loc:
                 try:
-                    # Extraer nombre y ID del enlace
-                    # Ejemplo: /vestido-punto-p01234567.html
-                    parte_final = link.split('/')[-1]
-                    nombre = parte_final.split('-p')[0].replace('-', ' ').title()
-                    sku = parte_final.split('-p')[-1].replace('.html', '')
+                    # Extraer ID y Título del enlace
+                    nombre_it = loc.split('/')[-1].split('-p')[0].replace('-', ' ').title()
+                    sku = loc.split('-p')[-1].replace('.html', '').split('?')[0]
                     
-                    lista_productos.append({
+                    productos_finales.append({
                         "id": sku,
-                        "title": nombre,
-                        "price": 29.95, # Precio base (Zara no lo da en el sitemap)
+                        "title": nombre_it,
+                        "price": 39.95, # Precio genérico
                         "category": "Nueva Colección",
                         "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
-                        "link": link,
+                        "link": loc,
                         "last_update": str(datetime.now().date())
                     })
                 except:
                     continue
 
-        # GUARDADO: Aquí es donde forzamos que se escriba todo
-        archivo = 'catalog.json'
+        with open('catalog.json', 'w', encoding='utf-8') as f:
+            json.dump(productos_finales, f, indent=4, ensure_ascii=False)
         
-        # IMPORTANTE: Si quieres borrar los 2 que escribiste a mano,
-        # simplemente guardamos la lista_productos directamente.
-        with open(archivo, 'w', encoding='utf-8') as f:
-            json.dump(lista_productos, f, indent=4, ensure_ascii=False)
-        
-        print(f"--- ÉXITO: {len(lista_productos)} productos guardados en catalog.json ---")
+        print(f"--- ÉXITO: {len(productos_finales)} productos guardados ---")
 
     except Exception as e:
         print(f"ERROR: {e}")
