@@ -18,7 +18,7 @@ jobs:
         run: pip install requests
 
       - name: Ejecutar Ingesta
-        run: python zara.py # Asegúrate de que el nombre coincida con tu archivo .py
+        run: python ingesta.py # Asegúrate de que el nombre coincida con tu archivo .py
 
       - name: Guardar cambios en el JSON
         run: |
