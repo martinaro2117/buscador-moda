@@ -1,0 +1,24 @@
+name: Ingesta Diaria Zara
+on:
+  # schedule:
+  #   - cron: '0 4 * * *'  # Ejecuta a las 4:00 AM todos los días
+  workflow_dispatch:      # Permite ejecutarlo manualmente para probar ahora
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configurar Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Ejecutar Ingesta
+        run: python ingesta.py
+      - name: Guardar cambios en el JSON
+        run: |
+          git config --global user.name 'MartinaBot'
+          git config --global user.email 'bot@github.com'
+          git add catalog.json
+          git commit -m "Update catálogo Zara incremental" || exit 0
+          git push
