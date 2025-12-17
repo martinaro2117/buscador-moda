@@ -73,7 +73,7 @@ def ingesta_zara():
                     print(f"✅ Guardado: {title}")
                 
                 # PAUSA DE SEGURIDAD: 2 segundos entre peticiones
-                time.sleep(2)
+                time.sleep(20)
 
             except Exception as e:
                 print(f"Error en este producto: {e}")
