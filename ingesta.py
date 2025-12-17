@@ -38,7 +38,7 @@ def ingesta_zara():
     ]
 
     # --- LÓGICA DELETE + UPDATE (Incremental) ---
-    archivo_db = 'zara_catalog.json'
+    archivo_db = 'catalog.json'
     db_actual = []
     
     if os.path.exists(archivo_db):
