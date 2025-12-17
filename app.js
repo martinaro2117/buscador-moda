@@ -1,46 +1,66 @@
 async function buscarPrenda() {
     const query = document.getElementById('prenda').value.toLowerCase();
-    const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
-    const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+    const minP = parseFloat(document.getElementById('minPrice').value) || 0;
+    const maxP = parseFloat(document.getElementById('maxPrice').value) || 9999;
     const contenedor = document.getElementById('resultados');
 
-    contenedor.innerHTML = '<p class="text-white">Cargando catálogo inteligente...</p>';
+    contenedor.innerHTML = '<p class="text-indigo-400 animate-pulse">Conectando con el catálogo de Zara...</p>';
 
     try {
+        // Intentamos cargar el archivo usando una ruta relativa segura
         const response = await fetch('./catalog.json');
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+
         const productos = await response.json();
 
-        // 1. FILTRAR
-        let resultados = productos.filter(p => {
+        // Filtrar productos
+        let filtrados = productos.filter(p => {
             const coincideNombre = p.title.toLowerCase().includes(query);
-            const coincidePrecio = p.price >= minPrice && p.price <= maxPrice;
+            const coincidePrecio = p.price >= minP && p.price <= maxP;
             return coincideNombre && coincidePrecio;
         });
 
-        // 2. ORDENAR (Menor a Mayor precio)
-        resultados.sort((a, b) => a.price - b.price);
+        // Ordenar de menor a mayor precio
+        filtrados.sort((a, b) => a.price - b.price);
 
-        // 3. MOSTRAR
-        mostrarResultados(resultados);
+        mostrarResultados(filtrados);
 
-    } catch (e) {
-        contenedor.innerHTML = '<p class="text-red-500">Error al conectar con la base de datos.</p>';
+    } catch (error) {
+        console.error("Detalles del error:", error);
+        contenedor.innerHTML = `
+            <div class="p-4 bg-red-900/20 border border-red-500 rounded-lg">
+                <p class="text-red-500 font-bold">Error al conectar con la base de datos.</p>
+                <p class="text-xs text-red-400 mt-2">Causa: El archivo catalog.json no se encuentra o está vacío.</p>
+            </div>
+        `;
     }
 }
 
-function mostrarResultados(lista) {
+function mostrarResultados(productos) {
     const contenedor = document.getElementById('resultados');
-    contenedor.innerHTML = lista.length ? '' : '<p>No se encontraron prendas.</p>';
-    
-    lista.forEach(p => {
+    contenedor.innerHTML = '';
+
+    if (productos.length === 0) {
+        contenedor.innerHTML = '<p class="text-gray-500">No se han encontrado prendas que coincidan.</p>';
+        return;
+    }
+
+    productos.forEach(prod => {
         contenedor.innerHTML += `
-            <div class="bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
-                <img src="${p.image}" class="w-full h-72 object-cover">
-                <div class="p-5">
-                    <h3 class="text-gray-400 text-xs uppercase tracking-widest">${p.category}</h3>
-                    <h2 class="text-white font-bold text-lg">${p.title}</h2>
-                    <p class="text-2xl text-indigo-400 font-light mt-2">${p.price} €</p>
-                    <a href="${p.link}" target="_blank" class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white mt-4 py-3 rounded-lg transition">Comprar en Zara</a>
+            <div class="bg-[#1a1a1a] rounded-2xl overflow-hidden border border-white/5 hover:border-indigo-500 transition-all group">
+                <div class="relative overflow-hidden">
+                    <img src="${prod.image}" alt="${prod.title}" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-6">
+                    <p class="text-indigo-500 text-xs font-bold uppercase tracking-widest mb-1">${prod.category}</p>
+                    <h3 class="text-white font-medium text-lg mb-2">${prod.title}</h3>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-2xl font-light text-white">${prod.price} €</span>
+                        <a href="${prod.link}" target="_blank" class="bg-white text-black px-4 py-2 rounded-lg font-bold text-xs uppercase hover:bg-indigo-500 hover:text-white transition">Ver en Zara</a>
+                    </div>
                 </div>
             </div>
         `;
