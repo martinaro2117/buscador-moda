@@ -1,5 +1,3 @@
-# Un script de Python que lee el sitemap, extrae datos y limpia los antiguos.
-
 import requests
 import xml.etree.ElementTree as ET
 import json
@@ -7,66 +5,64 @@ import os
 from datetime import datetime
 
 def ingesta_zara():
-    # URL del sitemap index que encontraste
-    sitemap_index_url = "https://www.zara.com/sitemaps/sitemap-index.xml.gz"
+    # Sitemap de productos de Zara España
+    url_sitemap = "https://www.zara.com/sitemaps/sitemap-es-es.xml"
     
-    print(f"Iniciando ingesta incremental: {datetime.now()}")
-    
-    # --- LÓGICA DE SIMULACIÓN DE EXTRACCIÓN ---
-    # Nota: Parsear un .gz de Zara requiere librerías como gzip y requests.
-    # Para la prueba, simulamos la captura de datos frescos del sitemap
-    
-    nuevos_productos = [
-        {
-            "id": "zara-001",
-            "title": "Vestido Lino Soft",
-            "price": 29.95,
-            "category": "Vestidos",
-            "image": "https://static.zara.net/photos///2024/V/0/1/p/2731/045/250/2/w/400/2731045250_6_1_1.jpg",
-            "link": "https://www.zara.com/es/es/vestido-lino-p02731045.html",
-            "last_update": str(datetime.now().date())
-        },
-        {
-            "id": "zara-002",
-            "title": "Chaqueta Denim Oversize",
-            "price": 39.95,
-            "category": "Chaquetas",
-            "image": "https://static.zara.net/photos///2024/V/0/1/p/2142/061/712/2/w/400/2142061712_6_1_1.jpg",
-            "link": "https://www.zara.com/es/es/chaqueta-estructura-p02142061.html",
-            "last_update": str(datetime.now().date())
-        }
-    ]
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
 
-    # --- LÓGICA DELETE + UPDATE (Incremental) ---
-    archivo_db = 'catalog.json'
-    db_actual = []
-    
-    if os.path.exists(archivo_db):
-        try:
-            with open(archivo_db, 'r', encoding='utf-8') as f:
-                contenido = f.read().strip()
-                if contenido: # Si el archivo NO está vacío
-                    db_actual = json.loads(contenido)
-                else:
-                    db_actual = []
-        except Exception as e:
-            print(f"Aviso: El archivo estaba corrupto o vacío, empezando de cero. Error: {e}")
-            db_actual = []
-    else:
-        db_actual = []
+    print("--- INICIANDO EXTRACCIÓN REAL ---")
 
-    # Convertimos a diccionario por ID para Update rápido
-    dict_db = {p['id']: p for p in db_actual}
-    
-    for nuevo in nuevos_productos:
-        # Update: Si existe lo pisa, si no, lo crea (Delete implícito de la versión vieja)
-        dict_db[nuevo['id']] = nuevo
+    try:
+        response = requests.get(url_sitemap, headers=headers, timeout=30)
+        response.raise_for_status()
+        
+        # Parseo del XML con el namespace de Zara
+        root = ET.fromstring(response.content)
+        ns = {'n': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+        
+        urls = root.findall('n:url', ns)
+        print(f"He encontrado {len(urls)} enlaces totales en Zara.")
 
-    # Guardamos de nuevo
-    with open(archivo_db, 'w', encoding='utf-8') as f:
-        json.dump(list(dict_db.values()), f, indent=4, ensure_ascii=False)
-    
-    print("Ingesta completada con éxito.")
+        lista_productos = []
+        
+        # Procesamos los primeros 100 enlaces que sean productos (/p/)
+        for u in urls:
+            link = u.find('n:loc', ns).text
+            
+            if "/p/" in link and len(lista_productos) < 100:
+                try:
+                    # Extraer nombre y ID del enlace
+                    # Ejemplo: /vestido-punto-p01234567.html
+                    parte_final = link.split('/')[-1]
+                    nombre = parte_final.split('-p')[0].replace('-', ' ').title()
+                    sku = parte_final.split('-p')[-1].replace('.html', '')
+                    
+                    lista_productos.append({
+                        "id": sku,
+                        "title": nombre,
+                        "price": 29.95, # Precio base (Zara no lo da en el sitemap)
+                        "category": "Nueva Colección",
+                        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+                        "link": link,
+                        "last_update": str(datetime.now().date())
+                    })
+                except:
+                    continue
+
+        # GUARDADO: Aquí es donde forzamos que se escriba todo
+        archivo = 'catalog.json'
+        
+        # IMPORTANTE: Si quieres borrar los 2 que escribiste a mano,
+        # simplemente guardamos la lista_productos directamente.
+        with open(archivo, 'w', encoding='utf-8') as f:
+            json.dump(lista_productos, f, indent=4, ensure_ascii=False)
+        
+        print(f"--- ÉXITO: {len(lista_productos)} productos guardados en catalog.json ---")
+
+    except Exception as e:
+        print(f"ERROR: {e}")
 
 if __name__ == "__main__":
     ingesta_zara()
