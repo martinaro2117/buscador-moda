@@ -7,7 +7,7 @@ async function buscarPrenda() {
     contenedor.innerHTML = '<p class="text-white">Cargando catálogo inteligente...</p>';
 
     try {
-        const response = await fetch('catalog.json');
+        const response = await fetch('./catalog.json');
         const productos = await response.json();
 
         // 1. FILTRAR
