@@ -1,6 +1,20 @@
-# Lo que se le ha pedido a Gemini para conseguir lo buscado y me ha respondido 
-
-#Esta es una arquitectura de nivel profesional. Para lograr lo que pides —especialmente el procesamiento de un Sitemap de Zara y una carga incremental (Delete + Update) 
-#sin pagar servidores— vamos a utilizar GitHub Actions. GitHub Actions permite ejecutar código (Python en este caso) de forma gratuita y programada (a las 4 AM) para 
-#"mecanizar" el scraping y guardar los datos en tu repositorio.
-
+[
+    {
+        "id": "zara-001",
+        "title": "Vestido Lino Soft",
+        "price": 29.95,
+        "category": "Vestidos",
+        "image": "https://static.zara.net/photos///2024/V/0/1/p/2731/045/250/2/w/400/2731045250_6_1_1.jpg",
+        "link": "https://www.zara.com/es/es/vestido-lino-p02731045.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "zara-002",
+        "title": "Chaqueta Denim Oversize",
+        "price": 39.95,
+        "category": "Chaquetas",
+        "image": "https://static.zara.net/photos///2024/V/0/1/p/2142/061/712/2/w/400/2142061712_6_1_1.jpg",
+        "link": "https://www.zara.com/es/es/chaqueta-estructura-p02142061.html",
+        "last_update": "2025-12-17"
+    }
+]
