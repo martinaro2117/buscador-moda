@@ -25,5 +25,5 @@ jobs:
           git config --global user.name 'MartinaBot'
           git config --global user.email 'bot@github.com'
           git add catalog.json
-          git commit -m "Update catálogo Zara incremental" || exit 0
-          git push
+          git commit -m "Update catálogo Zara incremental" || echo "No hay cambios para subir"
+          git push origin main
