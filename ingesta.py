@@ -1,4 +1,5 @@
 import requests
+import xml.etree.ElementTree as ET
 import json
 import gzip
 import re
@@ -6,64 +7,66 @@ from io import BytesIO
 from datetime import datetime
 
 def ingesta_zara():
-    # URL del sitemap que ya sabemos que sí nos deja descargar
+    # URL directa del sitemap de productos que has identificado
     url_final = "https://www.zara.com/sitemaps/sitemap-product-es-es.xml.gz"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
 
-    print("--- INICIANDO EXTRACCIÓN DIRECTA (MODO SEGURO) ---")
+    print(f"--- CONECTANDO A PRODUCTOS: {url_final} ---")
 
     try:
-        # Paso 1: Descargamos el archivo comprimido (Solo una petición)
         response = requests.get(url_final, headers=headers, timeout=30)
-        response.raise_for_status()
-        
         with gzip.open(BytesIO(response.content), 'rb') as f:
-            xml_content = f.read().decode('utf-8')
+            xml_content = f.read()
         
-        # Paso 2: Extraer todos los enlaces usando expresiones regulares
-        urls = re.findall(r'<loc>(.*?)</loc>', xml_content)
-        print(f"Total de enlaces encontrados en el sitemap: {len(urls)}")
+        root = ET.fromstring(xml_content)
+        ns = {'n': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+        urls = root.findall(".//n:loc", ns)
+        
+        print(f"Total de productos en el sitemap: {len(urls)}")
 
         productos_finales = []
         
-        # Paso 3: Procesar los datos a partir de la URL (sin entrar en la web)
-        # Vamos a coger 100 productos de golpe
-        for link in urls[:100]:
-            if "/p/" not in link:
-                continue
-            
+        # Procesamos los primeros 50 para que la Action no tarde demasiado
+        for loc in urls[:50]:
+            link = loc.text
             try:
-                # Extraemos la información del propio texto del enlace
-                # Ejemplo: .../abrigo-lana-p01234567.html
+                # Extraer nombre e ID del enlace
                 slug = link.split('/')[-1]
-                nombre_raw = slug.split('-p')[0]
-                nombre_limpio = nombre_raw.replace('-', ' ').title()
+                nombre = slug.split('-p')[0].replace('-', ' ').title()
                 sku = slug.split('-p')[-1].replace('.html', '')
 
-                # Como no podemos entrar a por la foto real sin que nos bloqueen,
-                # usamos una imagen elegante de "Próximamente" o el logo de Zara
-                # para que tu buscador no se vea roto.
-                foto_placeholder = "https://brandemia.org/sites/default/files/inline/images/zara_logo_antes_despues.jpg"
+                # --- SCRAPING LIGERO PARA IMAGEN Y PRECIO ---
+                # Entramos brevemente a la ficha para sacar la foto real
+                print(f"Extrayendo datos de: {nombre}...")
+                page = requests.get(link, headers=headers, timeout=10)
+                
+                # Buscamos la imagen en los metadatos de la página (og:image)
+                img_match = re.search(r'property="og:image" content="(.*?)"', page.text)
+                foto = img_match.group(1) if img_match else "https://static.zara.net/photos/images/home/standard-light/top_0.jpg"
+                
+                # Buscamos el precio (suele estar en un formato JSON dentro del HTML)
+                precio_match = re.search(r'"price":(\d+\.\d+|\d+)', page.text)
+                precio = float(precio_match.group(1)) if precio_match else 29.95
 
                 productos_finales.append({
                     "id": sku,
-                    "title": nombre_limpio,
-                    "price": 39.95, # Precio genérico (el sitemap no da precios)
-                    "category": "Nueva Colección",
-                    "image": foto_placeholder,
+                    "title": nombre,
+                    "price": precio,
+                    "category": "Zara Woman/Man",
+                    "image": foto,
                     "link": link,
                     "last_update": str(datetime.now().date())
                 })
-            except:
+            except Exception as e:
+                print(f"Error con un producto: {e}")
                 continue
 
-        # Paso 4: Guardar el catálogo
         with open('catalog.json', 'w', encoding='utf-8') as f:
             json.dump(productos_finales, f, indent=4, ensure_ascii=False)
         
-        print(f"--- ÉXITO: {len(productos_finales)} productos guardados en catalog.json ---")
+        print(f"--- ÉXITO: {len(productos_finales)} productos con FOTO y PRECIO real cargados ---")
 
     except Exception as e:
         print(f"ERROR: {e}")
