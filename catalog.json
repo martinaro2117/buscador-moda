@@ -1,1 +1,452 @@
-[]
+[
+    {
+        "id": "09598144",
+        "title": "Jersey 100 Cashmere Oversize",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/jersey-100-cashmere-oversize-p09598144.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "09860360",
+        "title": "Leggings Lentejuelas",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/leggings-lentejuelas-p09860360.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "05770123",
+        "title": "Pantalon Bombacho Abalorios",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/pantalon-bombacho-abalorios-p05770123.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "05770122",
+        "title": "Top Tirantes Abalorios",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/top-tirantes-abalorios-p05770122.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "07997989",
+        "title": "Camisa Manga Ancha Con Lino",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/camisa-manga-ancha-con-lino-p07997989.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "T9551573263",
+        "title": "Conjunto Abrigo Gorro Heiq Xreflex %C2%A0Y Leggings Seamless%C2%A0Ski Collection",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/conjunto-abrigo-gorro-heiq-xreflex-%C2%A0y-leggings-seamless%C2%A0ski-collection-pT9551573263.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "T9691760656",
+        "title": "Conjunto Top Y Falda",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/conjunto-top-y-falda-pT9691760656.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "T9847466972",
+        "title": "Conjunto Top Y Falda",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/conjunto-top-y-falda-pT9847466972.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "T9816173778",
+        "title": "Conjunto Camisa Y",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/conjunto-camisa-y-pantalon-pT9816173778.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "T9527319346",
+        "title": "Conjunto Chaqueta Y",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/conjunto-chaqueta-y-pantalon-pT9527319346.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "T9363699406",
+        "title": "Conjunto Top Y",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/conjunto-top-y-pantalon-pT9363699406.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "T9313699594",
+        "title": "Conjunto Top Y",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/conjunto-top-y-pantalon-pT9313699594.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "T9596862133",
+        "title": "Conjunto Camisa Y Shorts",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/conjunto-camisa-y-shorts-pT9596862133.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "01131840",
+        "title": "Sudadera Flor Contraste",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-flor-contraste-p01131840.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "01165859",
+        "title": "Sudadera Joyas Delantero",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-joyas-delantero-p01165859.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "05644959",
+        "title": "Sudadera Texto Delantero",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-texto-delantero-p05644959.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "06050023",
+        "title": "Sudadera Capucha Estampada Texto",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-capucha-estampada-texto-p06050023.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "01277008",
+        "title": "Sudadera Efecto Lavada",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-efecto-lavada-pink-floyd--p01277008.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04174672",
+        "title": "Sudadera Rustica Rib",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-rustica-rib-p04174672.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "05644938",
+        "title": "Sudadera Etiqueta Delantero",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-etiqueta-delantero-p05644938.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "07677627",
+        "title": "Sudadera Efecto Lavado",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-efecto-lavado-p07677627.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "05063795",
+        "title": "Cazadora Soft Manga Abullonada",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/cazadora-soft-manga-abullonada-p05063795.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "00264826",
+        "title": "Sudadera Varsity Volante",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-varsity-volante-p00264826.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "06050020",
+        "title": "Sudadera Efecto Lavado Smiley ",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-efecto-lavado-smiley--p06050020.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "06050011",
+        "title": "Sudadera Lavada Texto",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-lavada-texto-p06050011.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "03253003",
+        "title": "Sudadera Efecto Lavado Snoopy",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-efecto-lavado-snoopy-peanuts--p03253003.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "03253815",
+        "title": "Sudadera Efecto Lavado Rotos",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-efecto-lavado-rotos-p03253815.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "03199807",
+        "title": "Sudadera Oversize Rib",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-oversize-rib-p03199807.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "06050046",
+        "title": "Sudadera Lavada%C2%A0Hello Kitty   2025 Sanrio",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-lavada%C2%A0hello-kitty---2025-sanrio-p06050046.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "00264820",
+        "title": "Sudadera Metalizada",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-metalizada-p00264820.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04935627",
+        "title": "Sudadera Capucha Oversize",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-capucha-oversize-p04935627.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "05039851",
+        "title": "Sudadera Soft Tachas",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-soft-tachas-p05039851.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04805801",
+        "title": "Sudadera Texto Contraste",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-texto-contraste-p04805801.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04805807",
+        "title": "Sudadera Texto Capucha",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-texto-capucha-p04805807.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04813806",
+        "title": "Manguitos Felpa",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/manguitos-felpa-p04813806.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "06050022",
+        "title": "Sudadera Lavada Texto",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-lavada-texto-p06050022.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04644003",
+        "title": "Sudadera Estampada Betty Boop ",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-estampada-betty-boop--p04644003.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "01165872",
+        "title": "Sudadera Lavada Texto",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-lavada-texto-p01165872.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "00858830",
+        "title": "Sudadera Manga Ranglan",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-manga-ranglan-p00858830.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "05643812",
+        "title": "Sudadera Lavada Disney %C2%A0",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-lavada-disney-%C2%A0-p05643812.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "06050018",
+        "title": "Sudadera Efecto Lavado Las Super Nenas ",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-efecto-lavado-las-super-nenas--p06050018.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "03199806",
+        "title": "Sudadera Capucha%C2%A0",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-capucha%C2%A0-p03199806.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04174026",
+        "title": "Sudadera Texto Contraste",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-texto-contraste-p04174026.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "00264824",
+        "title": "Sudadera Combinada Varsity",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-combinada-varsity-p00264824.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "01165867",
+        "title": "Sudadera Capucha Globo",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-capucha-globo-p01165867.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04174025",
+        "title": "Sudadera Texto",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-texto-p04174025.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04805802",
+        "title": "Sudadera Texto Bordado Globo",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-texto-bordado-globo-p04805802.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "04174110",
+        "title": "Sudadera Varsity",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-varsity-p04174110.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "06050811",
+        "title": "Sudadera Bordado Silueta Mickey Harry Lambert For Zara X Disney",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-bordado-silueta-mickey-harry-lambert-for-zara-x-disney-p06050811.html",
+        "last_update": "2025-12-17"
+    },
+    {
+        "id": "06050814",
+        "title": "Sudadera Capucha Harry Lambert For Zara X Disney",
+        "price": 29.95,
+        "category": "Zara Woman/Man",
+        "image": "https://static.zara.net/photos/images/home/standard-light/top_0.jpg",
+        "link": "https://www.zara.com/es/es/sudadera-capucha-harry-lambert-for-zara-x-disney-p06050814.html",
+        "last_update": "2025-12-17"
+    }
+]
