@@ -2,75 +2,71 @@ import requests
 import xml.etree.ElementTree as ET
 import json
 import gzip
+import re
 from io import BytesIO
 from datetime import datetime
 
 def ingesta_zara():
-    # 1. El índice de España que encontraste
-    url_indice_es = "https://www.zara.com/sitemaps/sitemap-es-es.xml.gz"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+    # URL directa del sitemap de productos que has identificado
+    url_final = "https://www.zara.com/sitemaps/sitemap-product-es-es.xml.gz"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
 
-    print("--- PASO 1: Abriendo el índice de España ---")
+    print(f"--- CONECTANDO A PRODUCTOS: {url_final} ---")
 
     try:
-        r1 = requests.get(url_indice_es, headers=headers, timeout=20)
-        with gzip.open(BytesIO(r1.content), 'rb') as f:
-            xml_indice = f.read()
+        response = requests.get(url_final, headers=headers, timeout=30)
+        with gzip.open(BytesIO(response.content), 'rb') as f:
+            xml_content = f.read()
         
-        root_indice = ET.fromstring(xml_indice)
+        root = ET.fromstring(xml_content)
         ns = {'n': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+        urls = root.findall(".//n:loc", ns)
         
-        # 2. Buscamos los sitemaps de PRODUCTOS dentro del índice
-        sub_sitemaps = [loc.text for loc in root_indice.findall(".//n:loc", ns)]
-        # Filtramos los que contienen 'product'
-        sitemaps_productos = [s for s in sub_sitemaps if 'product' in s]
-        
-        if not sitemaps_productos:
-            print("No se encontraron sub-sitemaps de productos. Usando el primero disponible.")
-            target = sub_sitemaps[0]
-        else:
-            target = sitemaps_productos[0]
+        print(f"Total de productos en el sitemap: {len(urls)}")
 
-        print(f"--- PASO 2: Entrando al sitemap real: {target} ---")
-
-        # 3. Descargamos el sitemap final con la ropa
-        r2 = requests.get(target, headers=headers, timeout=20)
-        with gzip.open(BytesIO(r2.content), 'rb') as f:
-            xml_ropa = f.read()
-        
-        root_ropa = ET.fromstring(xml_ropa)
-        urls = root_ropa.findall(".//n:url", ns)
-        
         productos_finales = []
-        for u in urls:
-            loc = u.find('n:loc', ns).text
-            if "/p/" in loc:
-                try:
-                    parte_final = loc.split('/')[-1]
-                    nombre = parte_final.split('-p')[0].replace('-', ' ').title()
-                    sku = parte_final.split('-p')[-1].replace('.html', '').split('?')[0]
-                    
-                    # Lógica de imagen: Intentamos construir la URL de Zara
-                    # Zara usa el ID para sus fotos. Esto fallará a veces, pero es mejor que nada.
-                    img_id = sku.replace('v', '')
-                    foto = f"https://static.zara.net/photos///contents/mkt/spots/ss24-north-woman-new/subhome-xmedia-04//w/400/large-smart-image.jpg"
-                    
-                    productos_finales.append({
-                        "id": sku,
-                        "title": nombre,
-                        "price": 29.95,
-                        "category": "Zara New Collection",
-                        "image": foto,
-                        "link": loc,
-                        "last_update": str(datetime.now().date())
-                    })
-                    if len(productos_finales) >= 150: break
-                except: continue
+        
+        # Procesamos los primeros 50 para que la Action no tarde demasiado
+        for loc in urls[:50]:
+            link = loc.text
+            try:
+                # Extraer nombre e ID del enlace
+                slug = link.split('/')[-1]
+                nombre = slug.split('-p')[0].replace('-', ' ').title()
+                sku = slug.split('-p')[-1].replace('.html', '')
+
+                # --- SCRAPING LIGERO PARA IMAGEN Y PRECIO ---
+                # Entramos brevemente a la ficha para sacar la foto real
+                print(f"Extrayendo datos de: {nombre}...")
+                page = requests.get(link, headers=headers, timeout=10)
+                
+                # Buscamos la imagen en los metadatos de la página (og:image)
+                img_match = re.search(r'property="og:image" content="(.*?)"', page.text)
+                foto = img_match.group(1) if img_match else "https://static.zara.net/photos/images/home/standard-light/top_0.jpg"
+                
+                # Buscamos el precio (suele estar en un formato JSON dentro del HTML)
+                precio_match = re.search(r'"price":(\d+\.\d+|\d+)', page.text)
+                precio = float(precio_match.group(1)) if precio_match else 29.95
+
+                productos_finales.append({
+                    "id": sku,
+                    "title": nombre,
+                    "price": precio,
+                    "category": "Zara Woman/Man",
+                    "image": foto,
+                    "link": link,
+                    "last_update": str(datetime.now().date())
+                })
+            except Exception as e:
+                print(f"Error con un producto: {e}")
+                continue
 
         with open('catalog.json', 'w', encoding='utf-8') as f:
             json.dump(productos_finales, f, indent=4, ensure_ascii=False)
         
-        print(f"--- ÉXITO TOTAL: {len(productos_finales)} prendas cargadas ---")
+        print(f"--- ÉXITO: {len(productos_finales)} productos con FOTO y PRECIO real cargados ---")
 
     except Exception as e:
         print(f"ERROR: {e}")
