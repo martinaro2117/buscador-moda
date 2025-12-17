@@ -1,29 +1,34 @@
 name: Ingesta Diaria Zara
 on:
-  workflow_dispatch: # Esto es lo que usas para darle al botón "Run"
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Esto asegura permiso de escritura
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout del código
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Llave de acceso
 
       - name: Configurar Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      # ESTA ES LA PARTE QUE TE FALTA:
-      - name: Instalar librerías necesarias
+      - name: Instalar librerías
         run: pip install requests
 
       - name: Ejecutar Ingesta
-        run: python ingesta.py # Asegúrate de que el nombre coincida con tu archivo .py
+        run: python ingesta.py
 
-      - name: Guardar cambios en el JSON
+      - name: Guardar y subir cambios
         run: |
-          git config --global user.name 'MartinaBot'
-          git config --global user.email 'bot@github.com'
+          git config --local user.name 'github-actions[bot]'
+          git config --local user.email 'github-actions[bot]@users.noreply.github.com'
           git add catalog.json
-          git commit -m "Update catálogo Zara incremental" || echo "No hay cambios para subir"
+          # Si no hay cambios, no fallará
+          git commit -m "Update catálogo" || echo "No hay cambios"
           git push origin main
