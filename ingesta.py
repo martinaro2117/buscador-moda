@@ -38,11 +38,20 @@ def ingesta_zara():
     ]
 
     # --- LÓGICA DELETE + UPDATE (Incremental) ---
-    archivo_db = 'catalog.json'
+    archivo_db = 'zara_catalog.json'
+    db_actual = []
     
     if os.path.exists(archivo_db):
-        with open(archivo_db, 'r', encoding='utf-8') as f:
-            db_actual = json.load(f)
+        try:
+            with open(archivo_db, 'r', encoding='utf-8') as f:
+                contenido = f.read().strip()
+                if contenido: # Si el archivo NO está vacío
+                    db_actual = json.loads(contenido)
+                else:
+                    db_actual = []
+        except Exception as e:
+            print(f"Aviso: El archivo estaba corrupto o vacío, empezando de cero. Error: {e}")
+            db_actual = []
     else:
         db_actual = []
 
