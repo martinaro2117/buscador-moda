@@ -1,36 +1,47 @@
 async function buscarPrenda() {
-    const prenda = document.getElementById('prenda').value;
-    const min = document.getElementById('minPrice').value;
-    const max = document.getElementById('maxPrice').value;
+    const query = document.getElementById('prenda').value.toLowerCase();
+    const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+    const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
     const contenedor = document.getElementById('resultados');
 
-    if(!prenda) return alert("Tienes que introducir la prenda para que te funcione");
-
-    contenedor.innerHTML = '<p class="text-center col-span-3">Buscando...</p>';
+    contenedor.innerHTML = '<p class="text-white">Cargando catálogo inteligente...</p>';
 
     try {
-        // Ejemplo con la API de Mercado Libre (Pública y no requiere Auth complejo para pruebas)
-        const response = await fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${prenda}&price=${min}-${max}`);
-        const data = await response.json();
+        const response = await fetch('catalog.json');
+        const productos = await response.json();
 
-        mostrarResultados(data.results);
-    } catch (error) {
-        console.error("Error:", error);
-        contenedor.innerHTML = "Hubo un error al conectar con la API.";
+        // 1. FILTRAR
+        let resultados = productos.filter(p => {
+            const coincideNombre = p.title.toLowerCase().includes(query);
+            const coincidePrecio = p.price >= minPrice && p.price <= maxPrice;
+            return coincideNombre && coincidePrecio;
+        });
+
+        // 2. ORDENAR (Menor a Mayor precio)
+        resultados.sort((a, b) => a.price - b.price);
+
+        // 3. MOSTRAR
+        mostrarResultados(resultados);
+
+    } catch (e) {
+        contenedor.innerHTML = '<p class="text-red-500">Error al conectar con la base de datos.</p>';
     }
 }
 
-function mostrarResultados(productos) {
+function mostrarResultados(lista) {
     const contenedor = document.getElementById('resultados');
-    contenedor.innerHTML = '';
-
-    productos.forEach(prod => {
+    contenedor.innerHTML = lista.length ? '' : '<p>No se encontraron prendas.</p>';
+    
+    lista.forEach(p => {
         contenedor.innerHTML += `
-            <div class="bg-[#222] p-4 rounded-2xl border border-white/5 hover:border-white/20 transition group">
-                <img src="${prod.thumbnail}" alt="${prod.title}" class="w-full h-64 object-contain mb-4 rounded-lg bg-white/5">
-                <h3 class="text-sm font-medium h-10 overflow-hidden text-gray-300">${prod.title}</h3>
-                <p class="text-white font-bold text-xl mt-2">${prod.price} €</p>
-                <a href="${prod.permalink}" target="_blank" class="block text-center bg-white/5 text-white border border-white/10 mt-4 py-2 rounded-lg hover:bg-white hover:text-black transition">Ver detalle</a>
+            <div class="bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+                <img src="${p.image}" class="w-full h-72 object-cover">
+                <div class="p-5">
+                    <h3 class="text-gray-400 text-xs uppercase tracking-widest">${p.category}</h3>
+                    <h2 class="text-white font-bold text-lg">${p.title}</h2>
+                    <p class="text-2xl text-indigo-400 font-light mt-2">${p.price} €</p>
+                    <a href="${p.link}" target="_blank" class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white mt-4 py-3 rounded-lg transition">Comprar en Zara</a>
+                </div>
             </div>
         `;
     });
